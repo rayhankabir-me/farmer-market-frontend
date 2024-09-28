@@ -45,7 +45,6 @@ export default function Posts() {
       "Are you sure you want to delete this post?"
     );
     if (!confirmDelete) return;
-    console.log("trying to delete");
 
     try {
       await axios.delete(
@@ -123,52 +122,51 @@ export default function Posts() {
 
   return (
     <div className="p-4 sm:ml-64">
-  <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map((post) => (
-        <div
-          key={post.PostId}
-          className="bg-white border dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow-md overflow-hidden"
-        >
-          <div className="relative w-full h-48">
-            <Image
-              src={PostImage}
-              layout="fill"
-              objectFit="cover"
-              alt="PostImage"
-              className="rounded-t-lg"
-            />
-          </div>
-          <div className="p-4">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-              {post.Title}
-            </h3>
-            <p className="text-gray-700 dark:text-gray-400 text-sm">
-              {post.Description}
-            </p>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Created by: {post.User.UserName}
-            </p>
-            <div className="mt-4 flex space-x-3">
-              <Link
-                href={`/dashboard/edit-post/${post.PostId}`}
-                className="text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Edit
-              </Link>
-              <button
-                onClick={() => handleDeletePost(post.PostId)}
-                className="text-red-600 dark:text-red-500 hover:underline"
-              >
-                Remove
-              </button>
+      <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <div
+              key={post.PostId}
+              className="bg-white border dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow-md overflow-hidden"
+            >
+              <div className="relative w-full h-48">
+                <Image
+                  src={PostImage}
+                  layout="fill"
+                  objectFit="cover"
+                  alt="PostImage"
+                  className="rounded-t-lg"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+                  {post.Title}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-400 text-sm">
+                  {post.Description}
+                </p>
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  Created by: {post.User.UserName}
+                </p>
+                <div className="mt-4 flex space-x-3">
+                  <Link
+                    href={`/dashboard/edit-post/${post.PostId}`}
+                    className="text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDeletePost(post.PostId)}
+                    className="text-red-600 dark:text-red-500 hover:underline"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
-  </div>
-</div>
-
   );
 }
