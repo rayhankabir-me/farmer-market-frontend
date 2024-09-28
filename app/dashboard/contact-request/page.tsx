@@ -16,20 +16,20 @@ export default function AddRequest() {
   }, []);
 
   //getting the categories data
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_BACKEND_API + "/api/categories"
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchCategories() {
+  //     try {
+  //       const response = await axios.get(
+  //         process.env.NEXT_PUBLIC_BACKEND_API + "/api/categories"
+  //       );
+  //       setCategories(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
 
-    fetchCategories();
-  }, []);
+  //   fetchCategories();
+  // }, []);
 
   const {
     register,

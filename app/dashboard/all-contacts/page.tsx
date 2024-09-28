@@ -4,8 +4,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 import Cookies from "js-cookie";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 export default function AllContacts() {
   const [contacts, setContacts] = useState([]);
@@ -22,22 +20,28 @@ export default function AllContacts() {
 
   //getting the contact request data
   useEffect(() => {
-    async function fetchContacts() {
-      try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_BACKEND_API + "/api/contacts"
-        );
-        setContacts(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
+    if (accessToken) {
+      async function fetchContacts() {
+        try {
+          const response = await axios.get(
+            process.env.NEXT_PUBLIC_BACKEND_API + "/api/contacts",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          setContacts(response.data);
+          setLoading(false);
+        } catch (error) {
+          setError(error);
+          setLoading(false);
+        }
       }
+      fetchContacts();
     }
-
-    fetchContacts();
-  }, []);
-
+  }, [accessToken]); // Add accessToken as a dependency
+  
   //delete contact request
   const handleDeleteContact = async (id) => {
     const confirmDelete = window.confirm(
@@ -56,7 +60,12 @@ export default function AllContacts() {
       );
       // Refresh contacts after deletion
       const response = await axios.get(
-        process.env.NEXT_PUBLIC_BACKEND_API + "/api/contacts"
+        process.env.NEXT_PUBLIC_BACKEND_API + "/api/contacts",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
       setContacts(response.data);
     } catch (error) {
