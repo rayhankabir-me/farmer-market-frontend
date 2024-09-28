@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
-export default function Cart() {
+const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,10 +18,10 @@ export default function Cart() {
 
   // Fetch cart items from the API
   useEffect(() => {
-    async function fetchCartItems() {
+    const fetchCartItems = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:54939/api/cart/getcart",
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/api/cart/getcart`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -29,19 +29,19 @@ export default function Cart() {
           }
         );
         setCartItems(response.data.CartItems);
-        setLoading(false);
       } catch (error) {
         setError(error);
+      } finally {
         setLoading(false);
       }
-    }
+    };
 
     if (accessToken) {
       fetchCartItems();
     }
   }, [accessToken]);
 
-  // Function to handle deleting a cart item
+  // Handle item deletion
   const handleDelete = async (itemId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this item?"
@@ -50,28 +50,25 @@ export default function Cart() {
     if (confirmDelete) {
       try {
         await axios.delete(
-          `http://localhost:54939/api/cart/remove-product/${itemId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API}/api/cart/remove-product/${itemId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
           }
         );
-        // Remove the deleted item from the UI
         setCartItems((prevItems) =>
           prevItems.filter((item) => item.ItemId !== itemId)
         );
       } catch (error) {
         console.error("Error deleting item:", error);
       }
-    } else {
-      console.log("Delete action cancelled.");
     }
   };
 
-  // Function to handle quantity update
+  // Handle quantity change
   const handleQuantityChange = async (itemId, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent decreasing below 1
+    if (newQuantity < 1) return;
 
     const itemToUpdate = cartItems.find((item) => item.ItemId === itemId);
     const newTotalPrice =
@@ -79,7 +76,7 @@ export default function Cart() {
 
     try {
       await axios.put(
-        `http://localhost:54939/api/cart/edit-item`,
+        `${process.env.NEXT_PUBLIC_BACKEND_API}/api/cart/edit-item`,
         {
           itemId: itemId,
           quantity: newQuantity,
@@ -91,7 +88,6 @@ export default function Cart() {
         }
       );
 
-      // Update the UI with the new quantity and total price
       setCartItems((prevItems) =>
         prevItems.map((item) =>
           item.ItemId === itemId
@@ -185,4 +181,6 @@ export default function Cart() {
       </div>
     </div>
   );
-}
+};
+
+export default Cart;

@@ -4,8 +4,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 import Cookies from "js-cookie";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 export default function AllContacts() {
   const [contacts, setContacts] = useState([]);
