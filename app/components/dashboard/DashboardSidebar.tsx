@@ -227,7 +227,7 @@ export default function DashboardSidebar({ userData }) {
             {role == "Admin" && (
               <li>
                 <Link
-                  href="/dashboard/allusers/"
+                  href="/dashboard/all-users/"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg

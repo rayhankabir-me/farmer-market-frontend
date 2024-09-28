@@ -29,7 +29,7 @@ export default function HomeProducts() {
     <>
       <div className="container mx-auto">
         <div className="flex flex-row">
-          <h1 className="mt-16 mb-8 max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-4xl dark:text-white">
+          <h1 className="mt-16 mb-8 max-w-2xl text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-4xl dark:text-white">
             Our Latest Products
           </h1>
         </div>
