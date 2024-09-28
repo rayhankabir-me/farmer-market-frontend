@@ -123,72 +123,52 @@ export default function Posts() {
 
   return (
     <div className="p-4 sm:ml-64">
-      <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-        <div className="flex items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
-          <div className="w-full relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Post
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Title
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Description
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Created By
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts.map((post) => (
-                  <tr
-                  
-                    key={post.PostId}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      <Image
-                        src={PostImage}
-                        width={100}
-                        height={80}
-                        alt="PostImage"
-                      />
-                    </th>
-                    <td className="px-6 py-4">{post.Title}</td>
-                    <td className="px-6 py-4">{post.Description}</td>
-                    <td className="px-6 py-4"> {post.User.UserName}</td>
-
-                    <td className="flex items-center px-6 py-4">
-                      <Link
-                        href={`/dashboard/edit-post/${post.PostId}`}
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => handleDeletePost(post.PostId)}
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
-                      >
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+  <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {posts.map((post) => (
+        <div
+          key={post.PostId}
+          className="bg-white border dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow-md overflow-hidden"
+        >
+          <div className="relative w-full h-48">
+            <Image
+              src={PostImage}
+              layout="fill"
+              objectFit="cover"
+              alt="PostImage"
+              className="rounded-t-lg"
+            />
+          </div>
+          <div className="p-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+              {post.Title}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-400 text-sm">
+              {post.Description}
+            </p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              Created by: {post.User.UserName}
+            </p>
+            <div className="mt-4 flex space-x-3">
+              <Link
+                href={`/dashboard/edit-post/${post.PostId}`}
+                className="text-blue-600 dark:text-blue-500 hover:underline"
+              >
+                Edit
+              </Link>
+              <button
+                onClick={() => handleDeletePost(post.PostId)}
+                className="text-red-600 dark:text-red-500 hover:underline"
+              >
+                Remove
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
+  </div>
+</div>
+
   );
 }
