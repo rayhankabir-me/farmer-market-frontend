@@ -1,18 +1,18 @@
 "use client";
 
 import axios from "axios";
-// import Cookies from "js-cookie";
-import { useState } from "react";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 export default function AddCategory() {
   const [successMessage, setSuccessMessage] = useState("");
-  //   const [accessToken, setAccessToken] = useState(null);
+    const [accessToken, setAccessToken] = useState(null);
 
   //getting the access token for user
-  //   useEffect(() => {
-  //     const access_token = Cookies.get("access_token");
-  //     setAccessToken(access_token);
-  //   }, []);
+    useEffect(() => {
+      const access_token = Cookies.get("Token");
+      setAccessToken(access_token);
+    }, []);
 
   const {
     register,
@@ -29,7 +29,7 @@ export default function AddCategory() {
         formData,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InJheWhhbiIsInJvbGUiOiJBZG1pbiIsImVtYWlsIjoicmF5aGFua2FiaXIud3BAZ21haWwuY29tIiwiVXNlcklkIjoiMSIsIm5iZiI6MTcyNzQzODkyMCwiZXhwIjoxNzI3NDQwNzIwLCJpYXQiOjE3Mjc0Mzg5MjAsImlzcyI6IkZhcm1lck1hcmtldCIsImF1ZCI6IlVzZXJzIn0.M3p1yHLH9hmDOJ3g22a5VcfSGXllrWeGrFjWvFZvZTY`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
