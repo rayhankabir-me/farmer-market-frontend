@@ -155,6 +155,24 @@ export default function DashboardSidebar({ userData }) {
             </li>
             <li>
               <Link
+                href="/dashboard/all-cart"
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7 4v2h1v11h11v-11h1v-2h-13zm15 4h-18v12c0 1.104.896 2 2 2h14c1.104 0 2-.896 2-2v-12zm-4 9h-10v-2h10v2zm0-4h-10v-2h10v2zm0-4h-10v-2h10v2z" />
+                </svg>
+                <span className="ms-3">All Cart</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link
                 href="/dashboard/all-contacts"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
