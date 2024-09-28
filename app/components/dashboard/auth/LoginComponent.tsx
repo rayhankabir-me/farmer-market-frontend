@@ -32,7 +32,7 @@ export default function LoginComponent() {
       );
 
       if (response.status === 200) {
-        setSuccessMessage("Login successful...! We're redirecting you");
+        setSuccessMessage("Login successful! We're redirecting you.");
 
         //access token
         const access_token = response.data.Token;
@@ -67,7 +67,7 @@ export default function LoginComponent() {
           </label>
           <input
             {...register("UserName", {
-              required: "Your must fill username...",
+              required: "Your must fill in the username.",
             })}
             type="text"
             id="UserName"
@@ -91,7 +91,7 @@ export default function LoginComponent() {
           </label>
           <input
             {...register("Password", {
-              required: "You must fill password...",
+              required: "You must fill in the password.",
             })}
             type="password"
             id="Password"
