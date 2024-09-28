@@ -33,12 +33,12 @@ export default function NavLink() {
         Blog
       </Link>
       <Link
-        href="/request-product"
+        href="/dashboard/contact-request"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/newcourse" ? "bg-gray-900" : ""
         }`}
       >
-        Request Product
+        Contact Form
       </Link>
       <Link
         href="/become-seller"

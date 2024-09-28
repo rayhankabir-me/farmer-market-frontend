@@ -45,6 +45,7 @@ export default function Posts() {
       "Are you sure you want to delete this post?"
     );
     if (!confirmDelete) return;
+    console.log("trying to delete");
 
     try {
       await axios.delete(
@@ -160,7 +161,7 @@ export default function Posts() {
                         src={PostImage}
                         width={100}
                         height={80}
-                        alt="Post Image"
+                        alt="PostImage"
                       />
                     </th>
                     <td className="px-6 py-4">{post.Title}</td>
