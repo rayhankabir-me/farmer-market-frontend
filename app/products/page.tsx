@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import Banner from "../components/frontend/products/Banner";
 import ProductItem from "../components/frontend/products/ProductItem";
 import SearchFilter from "../components/frontend/products/SearchFilter";
