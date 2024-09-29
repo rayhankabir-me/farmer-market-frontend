@@ -46,12 +46,10 @@ export async function middleware(request: NextRequest) {
     "/dashboard/all-contacts",
     "/dashboard/all-product-request",
     "/dashboard/all-users",
-    "/dashboard/contact-request",
     "/dashboard/create-post",
     "/dashboard/edit-category",
     "/dashboard/edit-post",
     "/dashboard/posts",
-    "/dashboard/request-product",
     "/dashboard/update-product",
   ];
 
