@@ -1,11 +1,11 @@
-import EditPrductData from "@/app/components/dashboard/product/EditProductData";
+import EditPostData from "@/app/components/frontend/posts/EditPostData";
 
-export default function SinglePost({ params }) {
+export default function EditSinglePost({ params }) {
   const { id } = params;
 
   return (
     <div>
-      <EditPrductData id={id} />
+      <EditPostData id={id} />
     </div>
   );
 }

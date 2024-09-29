@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-export default function EditPrductData({ id }) {
+export default function EditPostData({ id }) {
   const [successMessage, setSuccessMessage] = useState("");
   const [accessToken, setAccessToken] = useState(null);
   const [currentId, setCurrentId] = useState(id);
@@ -23,15 +23,9 @@ export default function EditPrductData({ id }) {
   useEffect(() => {
     async function fetchPostData() {
       if (!accessToken) return;
-
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_BACKEND_API + "/api/post/" + currentId,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
+          process.env.NEXT_PUBLIC_BACKEND_API + "/api/post/" + currentId
         );
         setPostData(response.data);
         setIsLoading(false);
