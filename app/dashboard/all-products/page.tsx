@@ -177,7 +177,7 @@ export default function AllProducts() {
 
                     <td className="flex items-center px-6 py-4">
                       <Link
-                        href={`/dashboard/update-course/${product.ProductId}`}
+                        href={`/dashboard/update-product/${product.ProductId}`}
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
                         Edit
