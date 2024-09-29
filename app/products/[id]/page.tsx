@@ -17,6 +17,7 @@ export default function ProductDetails({ params }) {
   const [accessToken, setAccessToken] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
   const [currentId, setCurrentId] = useState(id);
+  const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
   //getting the products data
@@ -44,6 +45,11 @@ export default function ProductDetails({ params }) {
   }, []);
 
   const submitForm = async (formData) => {
+    if (!accessToken) {
+      setLoginError("You must log in to add to cart...!");
+      return;
+    }
+
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_API + "/api/cart/addcart",
@@ -198,6 +204,11 @@ export default function ProductDetails({ params }) {
               {error && (
                 <p className="mt-8 text-sm text-red-600 dark:text-red-500">
                   <span className="font-medium">Oh, sorry!</span> {error}!
+                </p>
+              )}
+              {loginError && (
+                <p className="mt-8 text-sm text-red-600 dark:text-red-500">
+                  <span className="font-medium">Oh, sorry!</span> {loginError}!
                 </p>
               )}
             </div>

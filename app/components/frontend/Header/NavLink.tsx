@@ -33,6 +33,7 @@ export default function NavLink() {
         Blog
       </Link>
       <Link
+<<<<<<< HEAD
         href="/contact-request"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/newcourse" ? "bg-gray-900" : ""
@@ -41,6 +42,8 @@ export default function NavLink() {
         Contact Form
       </Link>
       <Link
+=======
+>>>>>>> 59c64aa83673d1fdbd63120f5ab9fe331faa8a62
         href="/dashboard/all-cart"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/applyinstructor" ? "bg-gray-900" : ""
@@ -57,7 +60,7 @@ export default function NavLink() {
         Become Seller
       </Link>
       <Link
-        href="/contact-us"
+        href="/contact-request"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/applyinstructor" ? "bg-gray-900" : ""
         }`}
@@ -66,7 +69,7 @@ export default function NavLink() {
       </Link>
 
       <Link
-        href="/dashboard/request-product"
+        href="/request-product"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/applyinstructor" ? "bg-gray-900" : ""
         }`}
