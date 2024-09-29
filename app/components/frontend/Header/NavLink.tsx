@@ -41,6 +41,14 @@ export default function NavLink() {
         Contact Form
       </Link>
       <Link
+        href="/dashboard/all-cart"
+        className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
+          pathname === "/applyinstructor" ? "bg-gray-900" : ""
+        }`}
+      >
+        Cart
+      </Link>
+      <Link
         href="/become-seller"
         className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
           pathname === "/applyinstructor" ? "bg-gray-900" : ""
@@ -55,6 +63,15 @@ export default function NavLink() {
         }`}
       >
         Contact Us
+      </Link>
+
+      <Link
+        href="/dashboard/request-product"
+        className={`text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium ${
+          pathname === "/applyinstructor" ? "bg-gray-900" : ""
+        }`}
+      >
+        Request Product
       </Link>
     </div>
   );
