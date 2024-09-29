@@ -4,8 +4,8 @@
 
 import ProductImage from "@/public/images/hero-image.webp";
 import axios from "axios";
+import Cookies from "js-cookie";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ export default function ProductDetails({ params }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [accessToken, setAccessToken] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
   const [currentId, setCurrentId] = useState(id);
   const router = useRouter();
 
@@ -26,7 +27,6 @@ export default function ProductDetails({ params }) {
           process.env.NEXT_PUBLIC_BACKEND_API + "/api/products/" + currentId
         );
         setProductData(response.data);
-        console;
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -36,6 +36,33 @@ export default function ProductDetails({ params }) {
 
     fetchProduct();
   }, [currentId]);
+
+  //getting user token
+  useEffect(() => {
+    const access_token = Cookies.get("Token");
+    setAccessToken(access_token);
+  }, []);
+
+  const submitForm = async (formData) => {
+    try {
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_API + "/api/cart/addcart",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setSuccessMessage("Product added to the cart successful...!");
+      }
+    } catch (error) {
+      setError("Something went wrong..!");
+    }
+  };
 
   if (loading) {
     return (
@@ -139,12 +166,40 @@ export default function ProductDetails({ params }) {
               <h4 className="mb-8">
                 Category: <strong>{productData.Category.Name}</strong>
               </h4>
-              <Link
-                className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                href={`/Reviewcourse/`}
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  submitForm(formData);
+                }}
               >
-                Review Course
-              </Link>
+                <input
+                  type="hidden"
+                  id="ProductId"
+                  name="ProductId"
+                  value={productData.ProductId}
+                />
+                <input
+                  className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="submit"
+                  value="Add To Cart"
+                />
+              </form>
+
+              {successMessage && (
+                <div className="mt-8 flex items-center">
+                  <p className="text-sm text-green-600 dark:text-green-500">
+                    <span className="font-medium">Great!</span> {successMessage}
+                  </p>
+                </div>
+              )}
+
+              {error && (
+                <p className="mt-8 text-sm text-red-600 dark:text-red-500">
+                  <span className="font-medium">Oh, sorry!</span> {error}!
+                </p>
+              )}
             </div>
           </article>
         </div>

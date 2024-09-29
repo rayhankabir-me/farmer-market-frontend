@@ -1,5 +1,4 @@
 "use client";
-
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -10,13 +9,11 @@ const Cart = () => {
   const [error, setError] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
 
-  // Fetch access token from cookies
   useEffect(() => {
     const access_token = Cookies.get("Token");
     setAccessToken(access_token);
   }, []);
 
-  // Fetch cart items from the API
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -28,9 +25,17 @@ const Cart = () => {
             },
           }
         );
-        setCartItems(response.data.CartItems);
+        if (response.data.CartItems && response.data.CartItems.length > 0) {
+          setCartItems(response.data.CartItems);
+        } else {
+          setError("You don't have anything in the cart.");
+        }
       } catch (error) {
-        setError(error);
+        if (error.response && error.response.status === 401) {
+          setError("You are not authorized. Please log in.");
+        } else {
+          setError("Something went wrong. Try again.");
+        }
       } finally {
         setLoading(false);
       }
@@ -41,7 +46,6 @@ const Cart = () => {
     }
   }, [accessToken]);
 
-  // Handle item deletion
   const handleDelete = async (itemId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this item?"
@@ -66,7 +70,6 @@ const Cart = () => {
     }
   };
 
-  // Handle quantity change
   const handleQuantityChange = async (itemId, newQuantity) => {
     if (newQuantity < 1) return;
 
@@ -100,7 +103,6 @@ const Cart = () => {
     }
   };
 
-  // Calculate grand total
   const grandTotal = cartItems.reduce(
     (total, item) => total + item.TotalPrice,
     0
@@ -111,24 +113,23 @@ const Cart = () => {
   }
 
   if (error) {
-    return <div>Error loading cart items: {error.message}</div>;
+    return <div className="text-center text-red-500 mt-4">{error}</div>;
   }
 
   return (
     <div className="p-4 ml-64">
-      {/* Centered Header */}
       <div className="flex items-center justify-center mb-4">
-        <h2 className="text-2xl font-bold text-center text-blue-300 mr-2">
+        <h2 className="text-2xl font-bold text-center text-blue-200 mr-2">
           Your Cart
         </h2>
-        <i className="fas fa-shopping-cart text-blue-300 text-2xl"></i>
+        <i className="fas fa-shopping-cart text-blue-200 text-2xl"></i>
       </div>
 
       <div className="flex flex-col gap-6 ml-4">
         {cartItems.map((item) => (
           <div
             key={item.ItemId}
-            className="bg-blue-500 text-white shadow-lg rounded-lg p-6 relative"
+            className="bg-blue-300 text-white shadow-lg rounded-lg p-6 relative"
             style={{ margin: "5px" }}
           >
             <h3 className="text-xl font-semibold mb-2">{item.ProductName}</h3>
@@ -155,7 +156,6 @@ const Cart = () => {
               Total Price: ${item.TotalPrice.toFixed(2)}
             </p>
 
-            {/* Delete button on the right */}
             <button
               onClick={() => handleDelete(item.ItemId)}
               className="absolute right-4 top-4 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
@@ -166,14 +166,12 @@ const Cart = () => {
         ))}
       </div>
 
-      {/* Grand Total Bar */}
-      <div className="mt-6 p-4 bg-blue-600 text-white font-bold text-lg rounded-lg">
+      <div className="mt-6 p-4 bg-blue-400 text-white font-bold text-lg rounded-lg">
         <div className="flex justify-end mr-3">
           <p>Grand Total: ${grandTotal.toFixed(2)}</p>
         </div>
       </div>
 
-      {/* Checkout Button */}
       <div className="flex justify-end mt-4">
         <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
           Checkout
