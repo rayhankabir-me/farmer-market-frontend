@@ -3,13 +3,12 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import PostImage from "@/public/images/post-image.png";
+//import ProductImage from "@/public/images/hero-image.webp";
 import Cookies from "js-cookie";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-export default function Posts() {
-  const [posts, setPosts] = useState([]);
+export default function AllOrders() {
+  const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [accessToken, setAccessToken] = useState(null);
@@ -21,14 +20,21 @@ export default function Posts() {
     setAccessToken(access_token);
   }, []);
 
-  //getting all post data
+  //getting the orders data
   useEffect(() => {
-    async function fetchPosts() {
+    if (!accessToken) return;
+
+    async function fetchOrders() {
       try {
         const response = await axios.get(
-          process.env.NEXT_PUBLIC_BACKEND_API + "/api/posts"
+          process.env.NEXT_PUBLIC_BACKEND_API + "/api/orders",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
         );
-        setPosts(response.data);
+        setOrders(response.data);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -36,32 +42,37 @@ export default function Posts() {
       }
     }
 
-    fetchPosts();
-  }, []);
+    fetchOrders();
+  }, [accessToken]); //Only fetch orders when accessToken is available
 
-  //delete post
-  const handleDeletePost = async (id) => {
+  //delete order
+  const handleDeleteOrder = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this post?"
+      "Are you sure you want to delete this order?"
     );
     if (!confirmDelete) return;
 
     try {
       await axios.delete(
-        process.env.NEXT_PUBLIC_BACKEND_API + `/api/delete-post/${id}`,
+        process.env.NEXT_PUBLIC_BACKEND_API + `/api/delete-order/${id}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
-      // Refresh post after deletion
+      // Refresh orders after deletion
       const response = await axios.get(
-        process.env.NEXT_PUBLIC_BACKEND_API + "/api/posts"
+        process.env.NEXT_PUBLIC_BACKEND_API + "/api/orders",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
-      setPosts(response.data);
+      setOrders(response.data);
     } catch (error) {
-      alert("Error deleting post:", error);
+      alert("Error deleting order:", error);
       // Handle error here
     }
   };
@@ -129,13 +140,25 @@ export default function Posts() {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Post Image
+                    Order Date
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Post Title
+                    Total Price
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Description
+                    Quantity
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    PaymentMethod
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    PaymentStatus
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    DeliveryAddress
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    OrderStatus
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Created By
@@ -146,35 +169,29 @@ export default function Posts() {
                 </tr>
               </thead>
               <tbody>
-                {posts.map((post) => (
+                {orders.map((order) => (
                   <tr
-                    key={post.PostId}
+                    key={order.OrderId}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      <Image
-                        src={PostImage}
-                        width={100}
-                        height={80}
-                        alt="Post Image"
-                      />
-                    </th>
-                    <td className="px-6 py-4">{post.Title}</td>
-                    <td className="px-6 py-4">{post.Description}</td>
-                    <td className="px-6 py-4">{post.User.UserName}</td>
+                    <td className="px-6 py-4">{order.OrderDate}</td>
+                    <td className="px-6 py-4">{order.CartItem.TotalPrice}</td>
+                    <td className="px-6 py-4">{order.CartItem.Quantity}</td>
+                    <td className="px-6 py-4">{order.PaymentMethod}</td>
+                    <td className="px-6 py-4">{order.PaymentStatus}</td>
+                    <td className="px-6 py-4">{order.DeliveryAddress}</td>
+                    <td className="px-6 py-4">{order.OrderStatus}</td>
+                    <td className="px-6 py-4"> {order.User.UserName}</td>
 
                     <td className="flex items-center px-6 py-4">
                       <Link
-                        href={`/dashboard/edit-post/${post.PostId}`}
+                        href={`/dashboard/edit-order/${order.OrderId}`}
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                       >
                         Edit
                       </Link>
                       <button
-                        onClick={() => handleDeletePost(post.PostId)}
+                        onClick={() => handleDeleteOrder(order.OrderId)}
                         className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3"
                       >
                         Remove

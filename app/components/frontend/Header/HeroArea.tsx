@@ -15,7 +15,7 @@ export default function HeroArea() {
             Join us every-market-day for a vibrant, sustainable shopping experience that supports local agriculture and brings our community together.
             </p>
             <a
-              href="/dashboard/all-products"
+              href="/products/"
               className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
             >
               What we have today

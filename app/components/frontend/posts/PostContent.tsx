@@ -33,7 +33,7 @@ export default function PostContent({ post }) {
             {Description}
           </p>
 
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <Link
               href={`/posts/${PostId}`}
               className="inline-flex items-center font-medium text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700"
@@ -55,7 +55,7 @@ export default function PostContent({ post }) {
                 />
               </svg>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
