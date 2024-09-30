@@ -15,25 +15,6 @@ export default function AddRequest() {
     setAccessToken(access_token);
   }, []);
 
-<<<<<<< HEAD
-  //getting the categories data
-  // useEffect(() => {
-  //   async function fetchCategories() {
-  //     try {
-  //       const response = await axios.get(
-  //         process.env.NEXT_PUBLIC_BACKEND_API + "/api/categories"
-  //       );
-  //       setCategories(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-
-  //   fetchCategories();
-  // }, []);
-
-=======
->>>>>>> 59c64aa83673d1fdbd63120f5ab9fe331faa8a62
   const {
     register,
     handleSubmit,
@@ -46,21 +27,13 @@ export default function AddRequest() {
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_API + "/api/contact/request",
-<<<<<<< HEAD
-        formData
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${accessToken}`,
-        //   },
-        // }
-=======
+
         formData,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
->>>>>>> 59c64aa83673d1fdbd63120f5ab9fe331faa8a62
       );
 
       if (response.status === 200) {
